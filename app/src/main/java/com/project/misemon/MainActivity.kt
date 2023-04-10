@@ -13,6 +13,8 @@ import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.CancellationTokenSource
 import com.project.misemon.databinding.ActivityMainBinding
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
 import java.util.jar.Manifest
 import kotlin.math.log
 
@@ -22,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     private var cancellationTokenSource: CancellationTokenSource? = null
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater)}
+    private val scope = MainScope()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -36,6 +39,7 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         cancellationTokenSource?.cancel()
+        scope.cancel()
     }
 
     @SuppressWarnings("MissingPermission")
