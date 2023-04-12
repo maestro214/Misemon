@@ -2,19 +2,23 @@ package com.project.misemon
 
 import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.CancellationTokenSource
+import com.project.misemon.data.Repository
 import com.project.misemon.databinding.ActivityMainBinding
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 import java.util.jar.Manifest
 import kotlin.math.log
 
@@ -39,7 +43,7 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         cancellationTokenSource?.cancel()
-        scope.cancel()
+        scope.cancel() //코루틴 스코프 해제
     }
 
     @SuppressWarnings("MissingPermission")
@@ -68,18 +72,12 @@ class MainActivity : AppCompatActivity() {
             // 권한이 승인된 경우, fetchData() 함수를 호출하여 데이터를 가져옵니다.
             //fetchData(주어진 API나 데이터베이스에서 데이터를 가져오는 것을 일컫는 보편적인 용어)
 
-            cancellationTokenSource = CancellationTokenSource()
-
-            fusedLocationProviderClient.getCurrentLocation(
-                LocationRequest.PRIORITY_HIGH_ACCURACY,
-                cancellationTokenSource!!.token
-            ).addOnSuccessListener { location ->
-                binding.textview.text = "${location.latitude},${location.longitude}"
+            fetchAirQualityData()
 
             }
 
 
-        }
+
 
 
     }
@@ -101,6 +99,32 @@ class MainActivity : AppCompatActivity() {
             REQUEST_ACCESS_LOCATION_PERMISSIONS
         )
     }
+
+
+
+    @SuppressLint("MissingPermission")
+    private fun fetchAirQualityData() {
+        cancellationTokenSource = CancellationTokenSource()
+
+        fusedLocationProviderClient
+            .getCurrentLocation(
+                LocationRequest.PRIORITY_HIGH_ACCURACY,
+                cancellationTokenSource!!.token
+            ).addOnSuccessListener { location ->
+                scope.launch {
+
+                    val monitoringStation =
+                        Repository.getNearbyMonitoringStation(location.latitude, location.longitude)
+                    binding.textview.text = monitoringStation?.stationName
+
+                }
+//                    binding.textview.text  = "${location.latitude},${location.longitude}"
+
+
+            }
+    }
+
+
 
     companion object {
         private const val REQUEST_ACCESS_LOCATION_PERMISSIONS = 100

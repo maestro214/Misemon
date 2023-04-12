@@ -14,5 +14,5 @@ interface KakaoLocalApiService {
     suspend fun getTmCoordinates(
         @Query("x") longitude: Double,
         @Query("y") latitude: Double
-    ): Response<TmCoordinatesResponse>
+    ): retrofit2.Response <TmCoordinatesResponse>
 }
