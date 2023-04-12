@@ -122,6 +122,8 @@ class MainActivity : AppCompatActivity() {
 
 
             }
+
+        //깃 유저네임 변경
     }
 
 
