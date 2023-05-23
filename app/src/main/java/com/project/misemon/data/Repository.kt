@@ -2,6 +2,7 @@ package com.project.misemon.data
 
 import android.os.Build
 import com.project.misemon.BuildConfig
+import com.project.misemon.data.models.airquality.MeasuredValue
 import com.project.misemon.data.services.AirKoreaApiService
 import com.project.misemon.data.services.KakaoLocalApiService
 import com.project.misemon.data.services.models.monitoringstation.MonitoringStation
@@ -31,6 +32,15 @@ object Repository {
             ?.monitoringStations
             ?.minByOrNull { it?.tm ?: Double.MAX_VALUE } //비교해서 가장 작은값 전달(위치가 제일 가까운)
     }
+
+    suspend fun getLatestAirQualityData(stationName: String): MeasuredValue? =
+        airKoreaApiService
+            .getRealtimeAirQualties(stationName)
+            .body()
+            ?.response
+            ?.body
+            ?.measuredValues
+            ?.firstOrNull()
 
     private val kakaoLocalApiService : KakaoLocalApiService by lazy{
         Retrofit.Builder()
