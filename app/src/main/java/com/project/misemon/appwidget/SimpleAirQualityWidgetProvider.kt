@@ -1,6 +1,7 @@
 package com.project.misemon.appwidget
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -12,6 +13,7 @@ import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
+import android.util.Log
 import android.view.View
 import android.widget.RemoteViews
 import androidx.core.app.ActivityCompat
@@ -35,7 +37,7 @@ class SimpleAirQualityWidgetProvider : AppWidgetProvider() {
         appWidgetIds: IntArray?
     ) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
-
+Log.d("온업데이트 정보","실행댐")
         ContextCompat.startForegroundService(
             context!!,
             Intent(context,UpdateWidgetService::class.java)
@@ -46,15 +48,21 @@ class SimpleAirQualityWidgetProvider : AppWidgetProvider() {
 
         override fun onCreate() {
             super.onCreate()
-
+Log.d("온크리트정보","실행댐")
             createChannelIfNeeded()
             startForeground(
                 NOTIFICATION_ID,
                 createNotification()
+
             )
         }
 
+        @SuppressLint("RemoteViewLayout")
         override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+
+
+            // 위젯 레이아웃을 가져옵니다.
+
 
             if (ActivityCompat.checkSelfPermission(
                     this,
@@ -93,15 +101,20 @@ class SimpleAirQualityWidgetProvider : AppWidgetProvider() {
                                 setViewVisibility(R.id.labelTextView, View.VISIBLE)
                                 setViewVisibility(R.id.gradeLabelTextView, View.VISIBLE)
 
-                                val currentGrade = (measuredValue?.khaiGrade ?: Grade.UNKNOWN)
-                                setTextViewText(
-                                    R.id.resultTextView,
-                                    currentGrade.emoji
-                                )
-                                setTextViewText(
-                                    R.id.gradeLabelTextView,
-                                    currentGrade.label
-                                )
+
+                                (measuredValue?.khaiGrade ?: Grade.UNKNOWN).let {grade ->
+                                    Log.d("위젯색상정보",grade.colorResId.toString())
+                                    setTextViewText(
+                                        R.id.resultTextView,
+                                        grade.emoji
+                                    )
+                                    setTextViewText(
+                                        R.id.gradeLabelTextView,
+                                        grade.label
+                                    )
+                                    setInt(R.id.widgetbackground,"setBackgroundResource",grade.colorResId)
+
+                                }
                             }
 
                             updateWidget(updateViews)
@@ -154,7 +167,7 @@ class SimpleAirQualityWidgetProvider : AppWidgetProvider() {
 
     companion object {
         private const val NOTIFICATION_ID = 101
-        private const val WIDGET_REFRESH_CHANNEL_ID = "WIDGET_REFRESH"
+        private const val WIDGET_REFRESH_CHANNEL_ID = "WIDGET_REFRESH_CHANNEL_ID"
 
     }
 }

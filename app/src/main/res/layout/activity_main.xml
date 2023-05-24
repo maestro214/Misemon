@@ -32,7 +32,7 @@
             android:layout_height="match_parent"
             android:alpha="0"
             tools:alpha="1"
-            tools:background="@color/gray"
+            tools:background="@color/green"
             tools:context=".MainActivity">
 
             <TextView
@@ -69,6 +69,7 @@
                 android:layout_marginTop="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                android:src="@drawable/misemon_normal"
                 android:background="#00ffffff"
                 app:layout_constraintTop_toBottomOf="@id/timestamp" />
 
@@ -78,13 +79,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
                 android:textColor="@color/white"
-                android:fontFamily="@font/the_jamsil_bold"
+                android:fontFamily="@font/the_jamsil_medium"
                 android:textSize="40sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/totalGradleEmojiTextView"
-                tools:text="매우나쁨" />
+                tools:text="보통" />
 
             <TextView
                 android:id="@+id/fineDustText"

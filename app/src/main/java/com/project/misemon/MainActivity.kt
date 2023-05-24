@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState) // 부모 클래스인 AppCompatActivity의 onCreate() 메소드를 호출합니다.
         setContentView(binding.root) // activity_main.xml 레이아웃을 이 액티비티에 연결합니다.
 
-        bindViews()
+        bindViews() // View binding 및 변수 초기화
         initVariables()
         requestLocationPermissions() // 위치 권한 요청을 위한 함수를 호출합니다.
 
@@ -55,24 +55,25 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        cancellationTokenSource?.cancel()
+        cancellationTokenSource?.cancel() // 코루틴 작업을 취소하기 위해 CancellationTokenSource의 cancel() 메서드 호출
         scope.cancel() //코루틴 스코프 해제
     }
 
+    // 위치 권한 요청 결과 처리
     @SuppressWarnings("MissingPermission")
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-        // 권한 요청 결과를 처리하기 위한 함수를 오버라이드합니다.
+        // 권한 요청 결과를 처리하기 위한 함수를 오버라이드
         super.onRequestPermissionsResult(
             requestCode,
             permissions,
             grantResults
-        ) // 부모 클래스의 onRequestPermissionsResult() 메소드를 호출합니다.
+        ) // 부모 클래스의 onRequestPermissionsResult() 메소드를 호출
 
-        // 위치 권한이 허용되었는지 확인합니다.
+        // 위치 권한이 허용되었는지 확인
         val locationPermissionGranted =
             requestCode == REQUEST_ACCESS_LOCATION_PERMISSIONS &&
                     grantResults[0] == PackageManager.PERMISSION_GRANTED
@@ -109,7 +110,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
+    // View binding 설정
     private fun bindViews() {
         binding.refresh.setOnRefreshListener {
             fetchAirQualityData()
@@ -121,6 +122,7 @@ class MainActivity : AppCompatActivity() {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
     }
 
+    // 위치 권한 요청
     private fun requestLocationPermissions() {
         ActivityCompat.requestPermissions(
             this,
@@ -132,7 +134,7 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-
+    // Android 10 이상의 배경 위치 권한 요청
     @RequiresApi(Build.VERSION_CODES.Q)
     private fun requestBackgroundLocationPermissions() {
         ActivityCompat.requestPermissions(
@@ -144,7 +146,7 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-
+    // 미세먼지 데이터 가져오기
     @SuppressLint("MissingPermission")
     private fun fetchAirQualityData() {
         cancellationTokenSource = CancellationTokenSource()
@@ -155,14 +157,16 @@ class MainActivity : AppCompatActivity() {
                 cancellationTokenSource!!.token
             ).addOnSuccessListener { location ->
                 scope.launch {  // 코루틴시작
-                    binding.errorDescriptionTextView.visibility = View.GONE
+                    binding.errorDescriptionTextView.visibility = View.GONE // 에러 메시지 숨김
                     try {
-
+                        // 가까운 관측소 가져오기
                         val monitoringStation =
                             Repository.getNearbyMonitoringStation(
                                 location.latitude,
                                 location.longitude
                             )
+
+                        // 최신 미세먼지 데이터 가져오기
                         val measuredValue =
                             Repository.getLatestAirQualityData(monitoringStation!!.stationName!!)
 
@@ -198,12 +202,12 @@ class MainActivity : AppCompatActivity() {
         binding.timestamp.text = timestamp
         binding.measuringStationAddressTextView.text = "측정 위치 : ${monitoringStation.addr}"
 
-        Log.d("정보",measuredValue.toString())
 
 
         (measuredValue.khaiGrade ?: Grade.UNKNOWN).let { grade ->
             binding.root.setBackgroundResource(grade.colorResId)
             binding.totalGradeLabelTextView.text = grade.label
+            Log.d("색상정보",grade.colorResId.toString())
 
 
 

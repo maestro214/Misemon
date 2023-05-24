@@ -42,6 +42,7 @@ object Repository {
             ?.measuredValues
             ?.firstOrNull()
 
+
     private val kakaoLocalApiService : KakaoLocalApiService by lazy{
         Retrofit.Builder()
             .baseUrl(Url.KAKAO_API_BASE_URL)

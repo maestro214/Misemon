@@ -26,4 +26,5 @@ interface AirKoreaApiService {
     suspend fun getRealtimeAirQualties(
         @Query("stationName") stationName: String
     ): retrofit2.Response<AirQualityResponse>
+
 }
