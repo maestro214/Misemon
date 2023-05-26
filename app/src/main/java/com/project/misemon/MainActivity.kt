@@ -2,6 +2,7 @@ package com.project.misemon
 
 import android.Manifest.permission.*
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Build
@@ -114,6 +115,8 @@ class MainActivity : AppCompatActivity() {
     private fun bindViews() {
         binding.refresh.setOnRefreshListener {
             fetchAirQualityData()
+            val intent = Intent(ACTION_REFRESH_DATA)
+            sendBroadcast(intent)
         }
     }
 
@@ -261,6 +264,8 @@ class MainActivity : AppCompatActivity() {
     companion object {
         private const val REQUEST_ACCESS_LOCATION_PERMISSIONS = 100
         private const val REQUEST_BACKGROUND_ACCESS_LOCATION_PERMISSIONS = 100
+        const val ACTION_REFRESH_DATA = "com.project.misemon.appwidget.ACTION_REFRESH_DATA"
+
 
     }
 }

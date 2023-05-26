@@ -24,6 +24,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.location.LocationServices
+import com.project.misemon.MainActivity
 import com.project.misemon.R
 import com.project.misemon.data.Repository
 import com.project.misemon.data.models.airquality.Grade
@@ -37,6 +38,15 @@ class SimpleAirQualityWidgetProvider : AppWidgetProvider() {
         appWidgetIds: IntArray?
     ) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
+
+        val mainActivityIntent = Intent(context, MainActivity::class.java)
+        mainActivityIntent.action = MainActivity.ACTION_REFRESH_DATA
+        context?.startActivity(mainActivityIntent)
+
+        val widgetProvider = ComponentName(context!!, SimpleAirQualityWidgetProvider::class.java)
+        val updateViews = RemoteViews(context.packageName, R.layout.widget_simple)
+        appWidgetManager?.updateAppWidget(widgetProvider, updateViews)
+
 Log.d("온업데이트 정보","실행댐")
         ContextCompat.startForegroundService(
             context!!,

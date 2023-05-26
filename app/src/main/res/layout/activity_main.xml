@@ -32,7 +32,7 @@
             android:layout_height="match_parent"
             android:alpha="0"
             tools:alpha="1"
-            tools:background="@color/green"
+            tools:background="@color/red"
             tools:context=".MainActivity">
 
             <TextView
@@ -69,7 +69,7 @@
                 android:layout_marginTop="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:src="@drawable/misemon_normal"
+                android:src="@drawable/misemon_bad"
                 android:background="#00ffffff"
                 app:layout_constraintTop_toBottomOf="@id/timestamp" />
 
