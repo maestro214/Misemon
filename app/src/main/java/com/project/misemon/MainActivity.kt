@@ -174,6 +174,7 @@ class MainActivity : AppCompatActivity() {
                             Repository.getLatestAirQualityData(monitoringStation!!.stationName!!)
 
                         displayAirQualityData(monitoringStation, measuredValue!!)
+                        //splash추가
 
                     } catch (exception: Exception) {
                         binding.errorDescriptionTextView.visibility = View.VISIBLE
