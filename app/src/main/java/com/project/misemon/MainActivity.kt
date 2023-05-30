@@ -174,14 +174,13 @@ class MainActivity : AppCompatActivity() {
                             Repository.getLatestAirQualityData(monitoringStation!!.stationName!!)
 
                         displayAirQualityData(monitoringStation, measuredValue!!)
-                        //splash추가
 
                     } catch (exception: Exception) {
                         binding.errorDescriptionTextView.visibility = View.VISIBLE
                         binding.contentsLayout.alpha = 0F
 
                     } finally {
-                        binding.progressBar.visibility = View.GONE
+                        binding.loadingImage.visibility = View.GONE
                         binding.refresh.isRefreshing = false
 
 
