@@ -17,13 +17,13 @@
             android:layout_height="match_parent">
 
 
-<!--        <ProgressBar-->
-<!--            android:id="@+id/progressBar"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="center" />-->
+            <!--        <ProgressBar-->
+            <!--            android:id="@+id/progressBar"-->
+            <!--            android:layout_width="wrap_content"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:layout_gravity="center" />-->
 
-        <include layout="@layout/loading_screen"/>
+            <include layout="@layout/loading_screen" />
 
         </FrameLayout>
 
@@ -38,14 +38,13 @@
             tools:ignore="HardcodedText" />
 
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/contentsLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:alpha="0"
             tools:alpha="1"
-            tools:background="@color/red"
+            tools:background="@color/green"
             tools:context=".MainActivity">
 
             <TextView
@@ -54,8 +53,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
                 android:textColor="@color/white"
-                android:textStyle="bold"
                 android:textSize="22sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -74,16 +73,15 @@
                 tools:text="2023-05-23" />
 
 
-
             <ImageView
                 android:id="@+id/totalGradleEmojiTextView"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_marginTop="15dp"
+                android:background="#00ffffff"
+                android:src="@drawable/misemon_bad"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:src="@drawable/misemon_bad"
-                android:background="#00ffffff"
                 app:layout_constraintTop_toBottomOf="@id/timestamp" />
 
             <TextView
@@ -91,8 +89,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
-                android:textColor="@color/white"
                 android:fontFamily="@font/the_jamsil_medium"
+                android:textColor="@color/white"
                 android:textSize="40sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -100,71 +98,148 @@
                 app:layout_constraintTop_toBottomOf="@id/totalGradleEmojiTextView"
                 tools:text="보통" />
 
-            <TextView
-                android:id="@+id/fineDustText"
-                android:layout_width="0dp"
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/topbox"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
                 android:layout_marginTop="25dp"
-                android:gravity="center"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@id/ultraFineDustText"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/totalGradeLabelTextView"
-                app:layout_constraintBottom_toTopOf="@id/fineDustInformationTextView"
-                tools:text= "미세먼지" />
-
-            <TextView
-                android:id="@+id/fineDustInformationTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:gravity="center"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toStartOf="@id/ultraFineDustInformationTextView"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/fineDustText"
-                tools:text=" 40 😀" />
-
-
-            <TextView
-                android:id="@+id/ultraFineDustText"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold"
+                app:cardCornerRadius="13dp"
+                app:cardBackgroundColor="@color/boxgreen"
+                app:cardElevation="40dp"
+                app:layout_constraintBottom_toTopOf="@id/upperDivider"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/fineDustText"
-                app:layout_constraintTop_toTopOf="@id/fineDustText"
-                tools:text="초미세먼지" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/totalGradeLabelTextView">
 
-            <TextView
-                android:id="@+id/ultraFineDustInformationTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/fineDustInformationTextView"
-                app:layout_constraintTop_toTopOf="@id/fineDustInformationTextView"
-                tools:text="10 😇" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="7dp">
+
+                    <TextView
+                        android:id="@+id/fineDustText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toTopOf="@id/fineDustInformationTextView"
+                        app:layout_constraintEnd_toStartOf="@id/ultraFineDustText"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="parent"
+                        tools:text="미세먼지" />
+
+                    <TextView
+                        android:id="@+id/fineDustInformationTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:layout_marginBottom="10dp"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toStartOf="@id/ultraFineDustInformationTextView"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/fineDustText"
+                        tools:text=" 40 😀" />
+
+                    <TextView
+                        android:id="@+id/ultraFineDustText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/fineDustText"
+                        app:layout_constraintTop_toTopOf="@id/fineDustText"
+                        tools:text="초미세먼지" />
+
+                    <TextView
+                        android:id="@+id/ultraFineDustInformationTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/fineDustInformationTextView"
+                        app:layout_constraintTop_toTopOf="@id/fineDustInformationTextView"
+                        tools:text="10 😇" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
 
             <View
                 android:id="@+id/upperDivider"
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="20dp"
                 android:alpha="0.5"
-                android:background="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/fineDustInformationTextView" />
+                app:layout_constraintTop_toBottomOf="@id/topbox" />
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/bottombox"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:cardElevation="40dp"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginVertical="10dp"
+                app:cardCornerRadius="13dp"
+                app:cardBackgroundColor="@color/boxgreen"
+                app:layout_constraintBottom_toBottomOf="@id/lowerDivider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/upperDivider">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <include
+                        android:id="@+id/so2Item"
+                        layout="@layout/view_measured_item"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_weight="1" />
+
+                    <include
+                        android:id="@+id/coItem"
+                        layout="@layout/view_measured_item"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_weight="1" />
+
+                    <include
+                        android:id="@+id/o3Item"
+                        layout="@layout/view_measured_item"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_weight="1" />
+
+                    <include
+                        android:id="@+id/no2Item"
+                        layout="@layout/view_measured_item"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_weight="1" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
 
             <View
                 android:id="@+id/lowerDivider"
@@ -173,51 +248,9 @@
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginBottom="12dp"
                 android:alpha="0.5"
-                android:background="@color/white"
                 app:layout_constraintBottom_toTopOf="@id/measuringStationAddressTextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginHorizontal="30dp"
-                android:layout_marginVertical="10dp"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="@id/lowerDivider"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/upperDivider">
-
-                <include
-                    android:id="@+id/so2Item"
-                    layout="@layout/view_measured_item"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-
-                <include
-                    android:id="@+id/coItem"
-                    layout="@layout/view_measured_item"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-
-                <include
-                    android:id="@+id/o3Item"
-                    layout="@layout/view_measured_item"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-
-                <include
-                    android:id="@+id/no2Item"
-                    layout="@layout/view_measured_item"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-
-            </LinearLayout>
 
 
             <TextView

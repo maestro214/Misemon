@@ -8,10 +8,17 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="blue">#4073B5</color>
-    <color name="green">#4E8E4B</color>
-    <color name="red">#C43E38</color>
-    <color name="miseblack">#252525</color>
+    <color name="blue">#355E95</color>
+    <color name="green">#488044</color>
+    <color name="red">#9A312C</color>
+    <color name="miseblack">#1B1B1B</color>
     <color name="gray">#424242</color>
+
+
+    <color name="boxblue">#4073B5</color>
+    <color name="boxgreen">#4E8E4B</color>
+    <color name="boxred">#C43E38</color>
+    <color name="boxmiseblack">#252525</color>
+
 
 </resources>

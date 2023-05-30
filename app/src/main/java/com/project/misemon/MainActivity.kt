@@ -4,15 +4,21 @@ import android.Manifest.permission.*
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.location.Location
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.animation.AnimationUtils
+import android.view.animation.AnticipateOvershootInterpolator
+import android.view.animation.BounceInterpolator
+import android.view.animation.DecelerateInterpolator
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
@@ -35,6 +41,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private var cancellationTokenSource: CancellationTokenSource? = null
+
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private val scope = MainScope()
@@ -207,23 +214,43 @@ class MainActivity : AppCompatActivity() {
 
 
 
+
+
         (measuredValue.khaiGrade ?: Grade.UNKNOWN).let { grade ->
+
+            binding.topbox.setCardBackgroundColor(ContextCompat.getColor(this,grade.boxcolorResId))
+            binding.bottombox.setCardBackgroundColor(ContextCompat.getColor(this,grade.boxcolorResId))
+
+
+
+
             binding.root.setBackgroundResource(grade.colorResId)
             binding.totalGradeLabelTextView.text = grade.label
             Log.d("색상정보",grade.colorResId.toString())
 
+            val animation = AnimationUtils.loadAnimation(this, R.anim.fall_down)
+            animation.interpolator = AnticipateOvershootInterpolator()
+
 
 
             when (grade.emoji) {
-                "\uD83D\uDE06" -> binding.totalGradleEmojiTextView.setImageResource(R.drawable.misemon_good)
-                "\uD83D\uDE42" -> binding.totalGradleEmojiTextView.setImageResource(R.drawable.misemon_normal)
-                "\uD83D\uDE1E" -> binding.totalGradleEmojiTextView.setImageResource(R.drawable.misemon_bad)
-                "\uD83D\uDE2B" -> binding.totalGradleEmojiTextView.setImageResource(R.drawable.misemon_awful)
-                "\uD83E\uDDD0" ->  binding.totalGradleEmojiTextView.setImageResource(R.drawable.misemon_awful)
+                "\uD83D\uDE06" -> {binding.totalGradleEmojiTextView.setImageResource(R.drawable.misemon_good)
+                                    binding.totalGradleEmojiTextView.startAnimation(animation)}
+                "\uD83D\uDE42" -> {binding.totalGradleEmojiTextView.setImageResource(R.drawable.misemon_normal)
+                                    binding.totalGradleEmojiTextView.startAnimation(animation)}
+                "\uD83D\uDE1E" -> {binding.totalGradleEmojiTextView.setImageResource(R.drawable.misemon_bad)
+                                    binding.totalGradleEmojiTextView.startAnimation(animation)}
+                "\uD83D\uDE2B" -> {binding.totalGradleEmojiTextView.setImageResource(R.drawable.misemon_awful)
+                                     binding.totalGradleEmojiTextView.startAnimation(animation)}
+                "\uD83E\uDDD0" ->  {binding.totalGradleEmojiTextView.setImageResource(R.drawable.misemon_awful)
+                                     binding.totalGradleEmojiTextView.startAnimation(animation)}
 
             }
 
         }
+
+
+
 
         with(measuredValue) {
 
