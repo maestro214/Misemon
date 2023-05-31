@@ -113,11 +113,20 @@ Log.d("온크리트정보","실행댐")
 
 
                                 (measuredValue?.khaiGrade ?: Grade.UNKNOWN).let {grade ->
-                                    Log.d("위젯색상정보",grade.colorResId.toString())
-                                    setTextViewText(
-                                        R.id.resultTextView,
-                                        grade.emoji
-                                    )
+
+                                    when (grade.label) {
+                                        "좋음" -> setTextViewText(R.id.resultTextView,"😆")
+                                        "보통" -> setTextViewText(R.id.resultTextView,"🙂")
+                                        "나쁨" -> setTextViewText(R.id.resultTextView,"😞")
+                                        "심각" -> setTextViewText(R.id.resultTextView,"😫")
+                                        "정보 없음" ->  setTextViewText(R.id.resultTextView,"🧐")
+
+                                    }
+
+//                                    setTextViewText(
+//                                        R.id.resultTextView,
+//                                        grade.emoji
+//                                    )
                                     setTextViewText(
                                         R.id.gradeLabelTextView,
                                         grade.label

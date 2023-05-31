@@ -25,8 +25,9 @@
         android:layout_weight="1"
         android:gravity="end"
         android:textColor="@color/white"
-        android:textSize="16sp"
-        tools:text="좋음 😄" />
+        android:textSize="19sp"
+        android:textStyle="bold"
+        tools:text="좋음" />
 
     <TextView
         android:id="@+id/valueTextView"

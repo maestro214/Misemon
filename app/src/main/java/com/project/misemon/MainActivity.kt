@@ -125,6 +125,10 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(ACTION_REFRESH_DATA)
             sendBroadcast(intent)
         }
+        //화면을 아래로 스크롤후 위로 스크롤할때에 화면 최상단에서만 refresh되도록 처리
+        binding.layoutScroll.viewTreeObserver.addOnScrollChangedListener {
+            binding.refresh.isEnabled = (binding.layoutScroll.scrollY == 0)
+        }
     }
 
 
@@ -233,16 +237,16 @@ class MainActivity : AppCompatActivity() {
 
 
 
-            when (grade.emoji) {
-                "\uD83D\uDE06" -> {binding.totalGradleEmojiTextView.setImageResource(R.drawable.misemon_good)
+            when (grade.label) {
+                "좋음" -> {binding.totalGradleEmojiTextView.setImageResource(R.drawable.misemon_good)
                                     binding.totalGradleEmojiTextView.startAnimation(animation)}
-                "\uD83D\uDE42" -> {binding.totalGradleEmojiTextView.setImageResource(R.drawable.misemon_normal)
+                "보통" -> {binding.totalGradleEmojiTextView.setImageResource(R.drawable.misemon_normal)
                                     binding.totalGradleEmojiTextView.startAnimation(animation)}
-                "\uD83D\uDE1E" -> {binding.totalGradleEmojiTextView.setImageResource(R.drawable.misemon_bad)
+                "나쁨" -> {binding.totalGradleEmojiTextView.setImageResource(R.drawable.misemon_bad)
                                     binding.totalGradleEmojiTextView.startAnimation(animation)}
-                "\uD83D\uDE2B" -> {binding.totalGradleEmojiTextView.setImageResource(R.drawable.misemon_awful)
+                "심각" -> {binding.totalGradleEmojiTextView.setImageResource(R.drawable.misemon_awful)
                                      binding.totalGradleEmojiTextView.startAnimation(animation)}
-                "\uD83E\uDDD0" ->  {binding.totalGradleEmojiTextView.setImageResource(R.drawable.misemon_awful)
+                "정보 없음" ->  {binding.totalGradleEmojiTextView.setImageResource(R.drawable.misemon_awful)
                                      binding.totalGradleEmojiTextView.startAnimation(animation)}
 
             }
@@ -256,10 +260,10 @@ class MainActivity : AppCompatActivity() {
 
             binding.fineDustText.text = "미세먼지"
             binding.ultraFineDustText.text = "초미세먼지"
-            binding.fineDustInformationTextView.text =
-                " ${(pm10Grade ?: Grade.UNKNOWN).toString()} \n $pm10Value ㎍/㎥"
-            binding.ultraFineDustInformationTextView.text =
-                " ${(pm25Grade ?: Grade.UNKNOWN).toString()} \n $pm25Value ㎍/㎥"
+            binding.fineDustGradeTextView.text = (pm10Grade ?: Grade.UNKNOWN).toString()
+            binding.ultraFineDustInformationTextView.text = (pm25Grade ?: Grade.UNKNOWN).toString()
+            binding.fineDustInformationTextView.text = "$pm10Value ㎍/㎥"
+            binding.ultraFineDustInformationTextView.text = "$pm25Value ㎍/㎥"
 
             with(binding.so2Item) {
                 labelTextView.text = "아황산가스"
