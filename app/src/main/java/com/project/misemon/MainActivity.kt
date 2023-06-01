@@ -9,7 +9,11 @@ import android.location.Location
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
+import android.util.TypedValue
+import android.view.Gravity
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.animation.AnticipateOvershootInterpolator
@@ -171,7 +175,7 @@ class MainActivity : AppCompatActivity() {
                 cancellationTokenSource!!.token
             ).addOnSuccessListener { location ->
                 scope.launch {  // 코루틴시작
-                    binding.errorDescriptionTextView.visibility = View.GONE // 에러 메시지 숨김
+//                    binding.errorDescriptionTextView.visibility = View.GONE // 에러 메시지 숨김
                     try {
                         // 가까운 관측소 가져오기
                         val monitoringStation =
@@ -187,8 +191,27 @@ class MainActivity : AppCompatActivity() {
                         displayAirQualityData(monitoringStation, measuredValue!!)
 
                     } catch (exception: Exception) {
-                        binding.errorDescriptionTextView.visibility = View.VISIBLE
-                        binding.contentsLayout.alpha = 0F
+                        val toast = Toast.makeText(
+                            applicationContext,
+                            "연결 상태를 확인할 수 없습니다.",
+                            Toast.LENGTH_LONG
+                        )
+                        toast.show()
+
+                        // 기존 토스트 메시지를 즉시 취소하고 새로운 메시지를 표시
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            toast.cancel()
+                            Toast.makeText(
+                                applicationContext,
+                                "네트워크 연결 상태를 확인해 주세요.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }, 2000) // 2000 밀리초(2초) 후에 실행
+
+
+//                        binding.errorDescriptionTextView.visibility = View.VISIBLE
+                        binding.contentsLayout.alpha = 1F
+                        NoneInternetdisplayAirQualityData()
 
                     } finally {
                         binding.loadingImage.visibility = View.GONE
@@ -222,15 +245,20 @@ class MainActivity : AppCompatActivity() {
 
         (measuredValue.khaiGrade ?: Grade.UNKNOWN).let { grade ->
 
-            binding.topbox.setCardBackgroundColor(ContextCompat.getColor(this,grade.boxcolorResId))
-            binding.bottombox.setCardBackgroundColor(ContextCompat.getColor(this,grade.boxcolorResId))
+            binding.topbox.setCardBackgroundColor(ContextCompat.getColor(this, grade.boxcolorResId))
+            binding.bottombox.setCardBackgroundColor(
+                ContextCompat.getColor(
+                    this,
+                    grade.boxcolorResId
+                )
+            )
 
 
 
 
             binding.root.setBackgroundResource(grade.colorResId)
             binding.totalGradeLabelTextView.text = grade.label
-            Log.d("색상정보",grade.colorResId.toString())
+            Log.d("색상정보", grade.colorResId.toString())
 
             val animation = AnimationUtils.loadAnimation(this, R.anim.fall_down)
             animation.interpolator = AnticipateOvershootInterpolator()
@@ -238,16 +266,26 @@ class MainActivity : AppCompatActivity() {
 
 
             when (grade.label) {
-                "좋음" -> {binding.totalGradleEmojiTextView.setImageResource(R.drawable.misemon_good)
-                                    binding.totalGradleEmojiTextView.startAnimation(animation)}
-                "보통" -> {binding.totalGradleEmojiTextView.setImageResource(R.drawable.misemon_normal)
-                                    binding.totalGradleEmojiTextView.startAnimation(animation)}
-                "나쁨" -> {binding.totalGradleEmojiTextView.setImageResource(R.drawable.misemon_bad)
-                                    binding.totalGradleEmojiTextView.startAnimation(animation)}
-                "심각" -> {binding.totalGradleEmojiTextView.setImageResource(R.drawable.misemon_awful)
-                                     binding.totalGradleEmojiTextView.startAnimation(animation)}
-                "정보 없음" ->  {binding.totalGradleEmojiTextView.setImageResource(R.drawable.misemon_awful)
-                                     binding.totalGradleEmojiTextView.startAnimation(animation)}
+                "좋음" -> {
+                    binding.totalGradleEmojiTextView.setImageResource(R.drawable.misemon_good)
+                    binding.totalGradleEmojiTextView.startAnimation(animation)
+                }
+                "보통" -> {
+                    binding.totalGradleEmojiTextView.setImageResource(R.drawable.misemon_normal)
+                    binding.totalGradleEmojiTextView.startAnimation(animation)
+                }
+                "나쁨" -> {
+                    binding.totalGradleEmojiTextView.setImageResource(R.drawable.misemon_bad)
+                    binding.totalGradleEmojiTextView.startAnimation(animation)
+                }
+                "심각" -> {
+                    binding.totalGradleEmojiTextView.setImageResource(R.drawable.misemon_awful)
+                    binding.totalGradleEmojiTextView.startAnimation(animation)
+                }
+                "정보 없음" -> {
+                    binding.totalGradleEmojiTextView.setImageResource(R.drawable.misemon_awful)
+                    binding.totalGradleEmojiTextView.startAnimation(animation)
+                }
 
             }
 
@@ -261,7 +299,7 @@ class MainActivity : AppCompatActivity() {
             binding.fineDustText.text = "미세먼지"
             binding.ultraFineDustText.text = "초미세먼지"
             binding.fineDustGradeTextView.text = (pm10Grade ?: Grade.UNKNOWN).toString()
-            binding.ultraFineDustInformationTextView.text = (pm25Grade ?: Grade.UNKNOWN).toString()
+            binding.ultraFineDustGradeTextView.text = (pm25Grade ?: Grade.UNKNOWN).toString()
             binding.fineDustInformationTextView.text = "$pm10Value ㎍/㎥"
             binding.ultraFineDustInformationTextView.text = "$pm25Value ㎍/㎥"
 
@@ -292,13 +330,76 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    companion object {
-        private const val REQUEST_ACCESS_LOCATION_PERMISSIONS = 100
-        private const val REQUEST_BACKGROUND_ACCESS_LOCATION_PERMISSIONS = 100
-        const val ACTION_REFRESH_DATA = "com.project.misemon.appwidget.ACTION_REFRESH_DATA"
+    @SuppressLint("SetTextI18n")
+    fun NoneInternetdisplayAirQualityData() {
+        binding.contentsLayout.animate()
+            .alpha(1F)
+            .start()
+
+        binding.measuringStationNameTextView.text = "인터넷 사용불가"
+        binding.timestamp.text = timestamp
+        binding.measuringStationAddressTextView.text = "위치 정보를 찾을 수 없음"
 
 
+
+        binding.topbox.setCardBackgroundColor(ContextCompat.getColor(this, R.color.boxmiseblack))
+        binding.bottombox.setCardBackgroundColor(ContextCompat.getColor(this, R.color.boxmiseblack))
+
+
+        binding.root.setBackgroundResource(R.color.miseblack)
+        binding.totalGradeLabelTextView.text = "네트워크 연결을\n확인 해주세요"
+
+
+        binding.totalGradeLabelTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 21f)
+
+        val animation = AnimationUtils.loadAnimation(this, R.anim.fall_down)
+        animation.interpolator = AnticipateOvershootInterpolator()
+
+
+        binding.totalGradleEmojiTextView.setImageResource(R.drawable.misemon_awful)
+        binding.totalGradleEmojiTextView.startAnimation(animation)
+
+
+        binding.fineDustText.text = "미세먼지"
+        binding.ultraFineDustText.text = "초미세먼지"
+        binding.fineDustGradeTextView.text = "정보없음"
+        binding.ultraFineDustGradeTextView.text = "정보없음"
+        binding.fineDustInformationTextView.text = "0"
+        binding.ultraFineDustInformationTextView.text = "0"
+
+        with(binding.so2Item) {
+            labelTextView.text = "아황산가스"
+            gradeTextView.text = "정보없음"
+            valueTextView.text = "0"
+        }
+
+        with(binding.coItem) {
+            labelTextView.text = "일산화탄소"
+            gradeTextView.text = "정보없음"
+            valueTextView.text = "0"
+        }
+
+        with(binding.o3Item) {
+            labelTextView.text = "오존"
+            gradeTextView.text = "정보없음"
+            valueTextView.text = "0"
+        }
+
+        with(binding.no2Item) {
+            labelTextView.text = "이산화질소"
+            gradeTextView.text = "정보없음"
+            valueTextView.text = "0"
+        }
     }
+
+
+companion object {
+    private const val REQUEST_ACCESS_LOCATION_PERMISSIONS = 100
+    private const val REQUEST_BACKGROUND_ACCESS_LOCATION_PERMISSIONS = 100
+    const val ACTION_REFRESH_DATA = "com.project.misemon.appwidget.ACTION_REFRESH_DATA"
+
+
+}
 }
 
 

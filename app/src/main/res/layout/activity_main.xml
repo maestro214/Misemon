@@ -26,15 +26,15 @@
 
         </FrameLayout>
 
-        <TextView
-            android:id="@+id/errorDescriptionTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="예기치 못한 문제가 발생했습니다.\n잠시 후 다시 시도해주세요."
-            android:visibility="gone"
-            tools:ignore="HardcodedText" />
+<!--        <TextView-->
+<!--            android:id="@+id/errorDescriptionTextView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:gravity="center"-->
+<!--            android:text="인터넷에 연결할수 없습니다.\n네트워크 연결상태를 확인해주세요."-->
+<!--            android:visibility="gone"-->
+<!--            tools:ignore="HardcodedText" />-->
 
         <ScrollView
             android:id="@+id/layoutScroll"
@@ -44,7 +44,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/contentsLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:alpha="0"
                 tools:alpha="1"
                 tools:background="@color/green"
@@ -95,6 +95,7 @@
                     android:textColor="@color/white"
                     android:textSize="40sp"
                     android:textStyle="bold"
+                    android:gravity="center"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/totalGradleEmojiTextView"
