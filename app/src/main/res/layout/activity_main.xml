@@ -26,15 +26,15 @@
 
         </FrameLayout>
 
-<!--        <TextView-->
-<!--            android:id="@+id/errorDescriptionTextView"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:gravity="center"-->
-<!--            android:text="인터넷에 연결할수 없습니다.\n네트워크 연결상태를 확인해주세요."-->
-<!--            android:visibility="gone"-->
-<!--            tools:ignore="HardcodedText" />-->
+        <!--        <TextView-->
+        <!--            android:id="@+id/errorDescriptionTextView"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_gravity="center"-->
+        <!--            android:gravity="center"-->
+        <!--            android:text="인터넷에 연결할수 없습니다.\n네트워크 연결상태를 확인해주세요."-->
+        <!--            android:visibility="gone"-->
+        <!--            tools:ignore="HardcodedText" />-->
 
         <ScrollView
             android:id="@+id/layoutScroll"
@@ -92,10 +92,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="17dp"
+                    android:gravity="center"
                     android:textColor="@color/white"
                     android:textSize="40sp"
                     android:textStyle="bold"
-                    android:gravity="center"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/totalGradleEmojiTextView"
@@ -110,7 +110,7 @@
                     android:layout_marginTop="30dp"
                     app:cardBackgroundColor="@color/boxgreen"
                     app:cardCornerRadius="13dp"
-                    app:cardElevation="40dp"
+                    app:cardElevation="5dp"
                     app:layout_constraintBottom_toTopOf="@id/upperDivider"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -142,10 +142,10 @@
                             android:layout_marginTop="10dp"
                             android:layout_marginBottom="10dp"
                             android:gravity="center"
-                            android:textStyle="bold"
                             android:text="좋음"
                             android:textColor="@color/white"
                             android:textSize="19sp"
+                            android:textStyle="bold"
                             app:layout_constraintEnd_toStartOf="@id/ultraFineDustGradeTextView"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/fineDustText" />
@@ -181,11 +181,11 @@
                             android:id="@+id/ultraFineDustGradeTextView"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:textStyle="bold"
                             android:gravity="center"
                             android:text="좋음"
                             android:textColor="@color/white"
                             android:textSize="19sp"
+                            android:textStyle="bold"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/fineDustGradeTextView"
                             app:layout_constraintTop_toTopOf="@id/fineDustGradeTextView" />
@@ -210,6 +210,7 @@
                     android:id="@+id/upperDivider"
                     android:layout_width="0dp"
                     android:layout_height="1dp"
+                    android:layout_margin="6dp"
                     android:layout_marginHorizontal="20dp"
                     android:alpha="0.5"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -225,7 +226,7 @@
                     android:layout_marginVertical="10dp"
                     app:cardBackgroundColor="@color/boxgreen"
                     app:cardCornerRadius="13dp"
-                    app:cardElevation="40dp"
+                    app:cardElevation="5dp"
                     app:layout_constraintBottom_toBottomOf="@id/lowerDivider"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -298,13 +299,35 @@
                     android:id="@+id/lowerDivider"
                     android:layout_width="0dp"
                     android:layout_height="1dp"
+                    android:layout_margin="6dp"
                     android:layout_marginHorizontal="20dp"
-                    android:layout_marginBottom="12dp"
                     android:alpha="0.5"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/bottombox" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/mapbox"
+                    android:layout_width="match_parent"
+                    android:layout_height="240dp"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_marginVertical="10dp"
+                    app:cardBackgroundColor="@color/boxgreen"
+                    app:cardCornerRadius="13dp"
+                    app:cardElevation="5dp"
                     app:layout_constraintBottom_toTopOf="@id/measuringStationAddressTextView"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/lowerDivider">
 
+                    <fragment
+                        android:id="@+id/map"
+                        android:name="com.naver.maps.map.MapFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+
+                </androidx.cardview.widget.CardView>
 
                 <TextView
                     android:id="@+id/measuringStationAddressTextView"
@@ -320,7 +343,8 @@
                     app:layout_constraintBottom_toTopOf="@id/additionalInformationTextView"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    tools:text="측정소 위치: 서울시 강남대로...." />
+                    app:layout_constraintTop_toBottomOf="@id/mapbox"
+                    tools:text="가까운 측정소 위치: 서울시 강남대로...." />
 
                 <TextView
                     android:id="@+id/additionalInformationTextView"

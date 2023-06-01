@@ -3,12 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.project.misemon">
 
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
         android:allowBackup="true"
@@ -16,31 +15,43 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.Misemon">
+        android:theme="@style/Theme.Misemon"
+        android:usesCleartextTraffic="true">
+
         <activity
             android:name=".MainActivity"
+            android:exported="true"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"
-            android:exported="true">
+            tools:ignore="LockedOrientationActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
 
-        <receiver android:name=".appwidget.SimpleAirQualityWidgetProvider"
+        <meta-data
+            android:name="com.naver.maps.map.CLIENT_ID"
+            android:value="z2f7jttck5" />
+
+
+        <receiver
+            android:name=".appwidget.SimpleAirQualityWidgetProvider"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
-            <meta-data android:name="android.appwidget.provider"
-                android:resource="@xml/widget_simple_info"/>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_simple_info" />
         </receiver>
 
-        <service android:name=".appwidget.SimpleAirQualityWidgetProvider$UpdateWidgetService"
-            android:foregroundServiceType="location"/>
+        <service
+            android:name=".appwidget.SimpleAirQualityWidgetProvider$UpdateWidgetService"
+            android:foregroundServiceType="location" />
     </application>
 
 </manifest>

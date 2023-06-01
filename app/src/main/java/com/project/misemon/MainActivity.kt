@@ -4,29 +4,30 @@ import android.Manifest.permission.*
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Color
-import android.location.Location
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.util.TypedValue
-import android.view.Gravity
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.animation.AnticipateOvershootInterpolator
-import android.view.animation.BounceInterpolator
-import android.view.animation.DecelerateInterpolator
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.CancellationTokenSource
+import com.naver.maps.map.LocationTrackingMode
+import com.naver.maps.map.NaverMap
+import com.naver.maps.map.NaverMapSdk
+import com.naver.maps.map.OnMapReadyCallback
+import com.naver.maps.map.util.FusedLocationSource
 import com.project.misemon.data.Repository
 import com.project.misemon.data.models.airquality.Grade
 import com.project.misemon.data.models.airquality.MeasuredValue
@@ -35,16 +36,17 @@ import com.project.misemon.databinding.ActivityMainBinding
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
-import java.lang.Exception
+import net.daum.mf.map.api.MapView
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.jar.Manifest
-import kotlin.math.log
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private lateinit var locationSource: FusedLocationSource
     private var cancellationTokenSource: CancellationTokenSource? = null
+
+    private lateinit var naverMap: NaverMap
 
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
@@ -57,6 +59,14 @@ class MainActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState) // 부모 클래스인 AppCompatActivity의 onCreate() 메소드를 호출합니다.
         setContentView(binding.root) // activity_main.xml 레이아웃을 이 액티비티에 연결합니다.
+
+        NaverMapSdk.getInstance(this).setClient(
+            NaverMapSdk.NaverCloudPlatformClient("z2f7jttck5")
+        )
+
+
+        locationSource =
+            FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
 
         bindViews() // View binding 및 변수 초기화
         initVariables()
@@ -105,11 +115,13 @@ class MainActivity : AppCompatActivity() {
 
                 fetchAirQualityData()
 
+
             }
 
         } else {
             // 권한이 거부된 경우, 액티비티를 종료합니다.
             if (!locationPermissionGranted) {
+                naverMap.locationTrackingMode = LocationTrackingMode.None
                 finish()
 
             } else {
@@ -393,14 +405,29 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-companion object {
-    private const val REQUEST_ACCESS_LOCATION_PERMISSIONS = 100
-    private const val REQUEST_BACKGROUND_ACCESS_LOCATION_PERMISSIONS = 100
-    const val ACTION_REFRESH_DATA = "com.project.misemon.appwidget.ACTION_REFRESH_DATA"
+    override fun onMapReady(p0: NaverMap) {
+        this.naverMap = naverMap
+
+    }
+
+
+    companion object {
+        private const val REQUEST_ACCESS_LOCATION_PERMISSIONS = 100
+        private const val REQUEST_BACKGROUND_ACCESS_LOCATION_PERMISSIONS = 100
+        const val ACTION_REFRESH_DATA = "com.project.misemon.appwidget.ACTION_REFRESH_DATA"
+        private const val LOCATION_PERMISSION_REQUEST_CODE = 1000
+
+
+    }
 
 
 }
+
+private fun MapView.setMapViewEventListener(mainActivity: MainActivity) {
+
 }
+
+
 
 
 
