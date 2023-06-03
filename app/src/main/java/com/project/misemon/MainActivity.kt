@@ -67,6 +67,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
         locationSource =
             FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
+        Log.d("네이버맵",locationSource.toString())
 
         bindViews() // View binding 및 변수 초기화
         initVariables()
@@ -114,7 +115,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
             } else {
 
                 fetchAirQualityData()
-
+                naverMap.locationTrackingMode = LocationTrackingMode.None
 
             }
 
@@ -132,6 +133,8 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
             }
         }
+
+
     }
 
     // View binding 설정
@@ -407,6 +410,10 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onMapReady(p0: NaverMap) {
         this.naverMap = naverMap
+        naverMap.locationSource = locationSource
+        Log.d("온맵레디","온맵레디")
+
+        Log.d("네이버맵",naverMap.locationSource.toString())
 
     }
 
