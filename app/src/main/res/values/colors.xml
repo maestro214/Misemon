@@ -20,5 +20,7 @@
     <color name="boxred">#C63F3A</color>
     <color name="boxmiseblack">#2B2B2B</color>
 
+    <color name="permissionlayout">#FFE5B4</color>
+
 
 </resources>

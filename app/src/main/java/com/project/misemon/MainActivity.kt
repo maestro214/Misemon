@@ -40,13 +40,13 @@ import net.daum.mf.map.api.MapView
 import java.text.SimpleDateFormat
 import java.util.*
 
-class MainActivity : AppCompatActivity(), OnMapReadyCallback {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-    private lateinit var locationSource: FusedLocationSource
+//    private lateinit var locationSource: FusedLocationSource
     private var cancellationTokenSource: CancellationTokenSource? = null
 
-    private lateinit var naverMap: NaverMap
+//    private lateinit var naverMap: NaverMap
 
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
@@ -65,9 +65,9 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         )
 
 
-        locationSource =
-            FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
-        Log.d("네이버맵",locationSource.toString())
+//        locationSource =
+//            FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
+//        Log.d("네이버맵",locationSource.toString())
 
         bindViews() // View binding 및 변수 초기화
         initVariables()
@@ -115,14 +115,14 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
             } else {
 
                 fetchAirQualityData()
-                naverMap.locationTrackingMode = LocationTrackingMode.None
+//                naverMap.locationTrackingMode = LocationTrackingMode.None
 
             }
 
         } else {
             // 권한이 거부된 경우, 액티비티를 종료합니다.
             if (!locationPermissionGranted) {
-                naverMap.locationTrackingMode = LocationTrackingMode.None
+//                naverMap.locationTrackingMode = LocationTrackingMode.None
                 finish()
 
             } else {
@@ -408,14 +408,14 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
 
-    override fun onMapReady(p0: NaverMap) {
-        this.naverMap = naverMap
-        naverMap.locationSource = locationSource
-        Log.d("온맵레디","온맵레디")
-
-        Log.d("네이버맵",naverMap.locationSource.toString())
-
-    }
+//    override fun onMapReady(p0: NaverMap) {
+//        this.naverMap = naverMap
+//        naverMap.locationSource = locationSource
+//        Log.d("온맵레디","온맵레디")
+//
+//        Log.d("네이버맵",naverMap.locationSource.toString())
+//
+//    }
 
 
     companion object {

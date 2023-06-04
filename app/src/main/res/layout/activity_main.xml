@@ -306,28 +306,28 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/bottombox" />
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/mapbox"
-                    android:layout_width="match_parent"
-                    android:layout_height="240dp"
-                    android:layout_marginHorizontal="8dp"
-                    android:layout_marginVertical="10dp"
-                    app:cardBackgroundColor="@color/boxgreen"
-                    app:cardCornerRadius="13dp"
-                    app:cardElevation="5dp"
-                    app:layout_constraintBottom_toTopOf="@id/measuringStationAddressTextView"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/lowerDivider">
+<!--                <androidx.cardview.widget.CardView-->
+<!--                    android:id="@+id/mapbox"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="240dp"-->
+<!--                    android:layout_marginHorizontal="8dp"-->
+<!--                    android:layout_marginVertical="10dp"-->
+<!--                    app:cardBackgroundColor="@color/boxgreen"-->
+<!--                    app:cardCornerRadius="13dp"-->
+<!--                    app:cardElevation="5dp"-->
+<!--                    app:layout_constraintBottom_toTopOf="@id/measuringStationAddressTextView"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toBottomOf="@id/lowerDivider">-->
 
-                    <fragment
-                        android:id="@+id/map"
-                        android:name="com.naver.maps.map.MapFragment"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+<!--                    <fragment-->
+<!--                        android:id="@+id/map"-->
+<!--                        android:name="com.naver.maps.map.MapFragment"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent" />-->
 
 
-                </androidx.cardview.widget.CardView>
+<!--                </androidx.cardview.widget.CardView>-->
 
                 <TextView
                     android:id="@+id/measuringStationAddressTextView"
@@ -343,7 +343,7 @@
                     app:layout_constraintBottom_toTopOf="@id/additionalInformationTextView"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/mapbox"
+                    app:layout_constraintTop_toBottomOf="@id/lowerDivider"
                     tools:text="가까운 측정소 위치: 서울시 강남대로...." />
 
                 <TextView
