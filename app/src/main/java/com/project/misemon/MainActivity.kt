@@ -1,5 +1,6 @@
 package com.project.misemon
 
+import android.Manifest
 import android.Manifest.permission.*
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -13,6 +14,7 @@ import android.util.TypedValue
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.animation.AnticipateOvershootInterpolator
+import android.widget.Button
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -65,13 +67,35 @@ class MainActivity : AppCompatActivity() {
         )
 
 
+        if (!hasLocationPermission()) {
+            setContentView(R.layout.permission_screen)
+            bindViews()
+            val requestButton = findViewById<Button>(R.id.startButton)
+            requestButton.setOnClickListener {
+                requestLocationPermissions()
+                initVariables()
+                binding.permissionLayout.permissionLayoutxml.visibility = View.GONE
+
+
+                Log.d("퍼미션","화면 넘긴다")
+
+                // 위치 권한 요청을 위한 함수를 호출합니다.
+            }
+        } else {
+
+            bindViews() // View binding 및 변수 초기화
+            initVariables()
+            requestLocationPermissions() // 위치 권한 요청을 위한 함수를 호출합니다.
+            // 위치 권한이 이미 허용된 경우 다음 동작 수행
+        }
+
+
+
 //        locationSource =
 //            FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
 //        Log.d("네이버맵",locationSource.toString())
 
-        bindViews() // View binding 및 변수 초기화
-        initVariables()
-        requestLocationPermissions() // 위치 권한 요청을 위한 함수를 호출합니다.
+
 
 
     }
@@ -89,6 +113,8 @@ class MainActivity : AppCompatActivity() {
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
+        Log.d("퍼미션","화면 넘어옴")
+
         // 권한 요청 결과를 처리하기 위한 함수를 오버라이드
         super.onRequestPermissionsResult(
             requestCode,
@@ -109,32 +135,36 @@ class MainActivity : AppCompatActivity() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             if (!backgroundlocationPermissionGranted) {
+                Log.d("퍼미션","거부당함, 화면 다시뜨게한다")
+
                 requestBackgroundLocationPermissions()
 
-
             } else {
-
+                binding.permissionLayout.visibility = View.GONE
                 fetchAirQualityData()
 //                naverMap.locationTrackingMode = LocationTrackingMode.None
+                Log.d("퍼미션","통과, 화면 사라지게한다")
 
             }
 
         } else {
             // 권한이 거부된 경우, 액티비티를 종료합니다.
             if (!locationPermissionGranted) {
-//                naverMap.locationTrackingMode = LocationTrackingMode.None
                 finish()
+//                naverMap.locationTrackingMode = LocationTrackingMode.None
 
             } else {
-                // 권한이 승인된 경우, fetchData() 함수를 호출하여 데이터를 가져옵니다.
-                //fetchData(주어진 API나 데이터베이스에서 데이터를 가져오는 것을 일컫는 보편적인 용어)
-
+                binding.permissionLayout.visibility = View.GONE
                 fetchAirQualityData()
 
             }
         }
 
 
+    }
+
+    private fun hasLocationPermission(): Boolean {
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
     }
 
     // View binding 설정
@@ -182,6 +212,7 @@ class MainActivity : AppCompatActivity() {
     // 미세먼지 데이터 가져오기
     @SuppressLint("MissingPermission")
     private fun fetchAirQualityData() {
+
         cancellationTokenSource = CancellationTokenSource()
 
         fusedLocationProviderClient
@@ -192,6 +223,7 @@ class MainActivity : AppCompatActivity() {
                 scope.launch {  // 코루틴시작
 //                    binding.errorDescriptionTextView.visibility = View.GONE // 에러 메시지 숨김
                     try {
+                        Log.d("퍼미션","가까운 관측소 가져오기")
                         // 가까운 관측소 가져오기
                         val monitoringStation =
                             Repository.getNearbyMonitoringStation(
@@ -232,6 +264,8 @@ class MainActivity : AppCompatActivity() {
                         binding.loadingImage.visibility = View.GONE
                         binding.refresh.isRefreshing = false
 
+                        Log.d("퍼미션","파이널리")
+
 
                     }
 
@@ -249,6 +283,8 @@ class MainActivity : AppCompatActivity() {
         binding.contentsLayout.animate()
             .alpha(1F)
             .start()
+
+        Log.d("퍼미션","디스플레이")
 
         binding.measuringStationNameTextView.text = monitoringStation.stationName
         binding.timestamp.text = timestamp

@@ -26,6 +26,22 @@
 
         </FrameLayout>
 
+        <FrameLayout
+            android:id="@+id/permissionLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <!--        <ProgressBar-->
+            <!--            android:id="@+id/progressBar"-->
+            <!--            android:layout_width="wrap_content"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:layout_gravity="center" />-->
+
+            <include layout="@layout/permission_screen" />
+
+        </FrameLayout>
+
         <!--        <TextView-->
         <!--            android:id="@+id/errorDescriptionTextView"-->
         <!--            android:layout_width="wrap_content"-->
