@@ -15,6 +15,7 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.animation.AnticipateOvershootInterpolator
 import android.widget.Button
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -72,9 +73,11 @@ class MainActivity : AppCompatActivity() {
             bindViews()
             val requestButton = findViewById<Button>(R.id.startButton)
             requestButton.setOnClickListener {
+
+                bindViews()
                 requestLocationPermissions()
                 initVariables()
-                binding.permissionLayout.permissionLayoutxml.visibility = View.GONE
+
 
 
                 Log.d("퍼미션","화면 넘긴다")
@@ -283,6 +286,9 @@ class MainActivity : AppCompatActivity() {
         binding.contentsLayout.animate()
             .alpha(1F)
             .start()
+
+        val permissionLayout = findViewById<FrameLayout>(R.id.permissionLayout)
+        permissionLayout.visibility = View.GONE
 
         Log.d("퍼미션","디스플레이")
 
