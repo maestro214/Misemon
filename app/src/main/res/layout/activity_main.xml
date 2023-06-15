@@ -27,7 +27,7 @@
         </FrameLayout>
 
         <FrameLayout
-            android:id="@+id/permissionLayout"
+            android:id="@+id/permissionFrameLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -38,63 +38,71 @@
             <!--            android:layout_height="wrap_content"-->
             <!--            android:layout_gravity="center" />-->
 
-<!--            <include layout="@layout/permission_screen" />-->
+            <!--            <include layout="@layout/permission_screen" />-->
 
 
-            <ImageView
-                android:id="@+id/permissionImage"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:foregroundGravity="center"
-                android:src="@drawable/misemon_permission_cloud"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:background="@color/boxblue">
 
-            <TextView
-                android:id="@+id/locationText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="60dp"
-                android:layout_marginBottom="20dp"
-                android:gravity="center"
-                android:text="사용자의 위치에서 가장 가까운 대기측정소     결과를 가져오기위해 위치권한이 필요합니다"
-                android:textSize="15sp"
-                app:layout_constraintBottom_toTopOf="@id/permissonText"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:ignore="HardcodedText" />
+                <ImageView
+                    android:id="@+id/permissionImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:foregroundGravity="center"
+                    android:src="@drawable/misemon_permission_cloud"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/locationText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="60dp"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center"
+                    android:text="사용자의 위치에서 가장 가까운 대기측정소     결과를 가져오기위해 위치권한이 필요합니다"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toTopOf="@id/permissonText"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:ignore="HardcodedText" />
 
 
-            <TextView
-                android:id="@+id/permissonText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="60dp"
-                android:layout_marginBottom="30dp"
-                android:gravity="center"
-                android:text="시작버튼을 누르시면 개인정보 처리방침에 동의하시는걸로 간주됩니다"
-                android:textSize="15sp"
-                app:layout_constraintBottom_toTopOf="@id/startButton"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:ignore="HardcodedText" />
+                <TextView
+                    android:id="@+id/permissonText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="60dp"
+                    android:layout_marginBottom="30dp"
+                    android:gravity="center"
+                    android:text="시작버튼을 누르시면 개인정보 처리방침에 동의하시는걸로 간주됩니다"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toTopOf="@id/startButton"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:ignore="HardcodedText" />
 
-            <Button
-                android:id="@+id/startButton"
-                android:layout_width="330dp"
-                android:layout_height="45dp"
-                android:layout_marginBottom="40dp"
-                android:background="@drawable/shape_background"
-                android:gravity="center"
-                android:text="시작하기"
-                android:textColor="@color/white"
-                android:textSize="17sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:ignore="HardcodedText,MissingConstraints" />
+                <Button
+                    android:id="@+id/startButton"
+                    android:layout_width="330dp"
+                    android:layout_height="45dp"
+                    android:layout_marginBottom="40dp"
+                    android:background="@drawable/shape_background"
+                    android:gravity="center"
+                    android:text="시작하기"
+                    android:textColor="@color/white"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:ignore="HardcodedText,MissingConstraints" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </FrameLayout>
 
@@ -378,28 +386,28 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/bottombox" />
 
-<!--                <androidx.cardview.widget.CardView-->
-<!--                    android:id="@+id/mapbox"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="240dp"-->
-<!--                    android:layout_marginHorizontal="8dp"-->
-<!--                    android:layout_marginVertical="10dp"-->
-<!--                    app:cardBackgroundColor="@color/boxgreen"-->
-<!--                    app:cardCornerRadius="13dp"-->
-<!--                    app:cardElevation="5dp"-->
-<!--                    app:layout_constraintBottom_toTopOf="@id/measuringStationAddressTextView"-->
-<!--                    app:layout_constraintEnd_toEndOf="parent"-->
-<!--                    app:layout_constraintStart_toStartOf="parent"-->
-<!--                    app:layout_constraintTop_toBottomOf="@id/lowerDivider">-->
+                <!--                <androidx.cardview.widget.CardView-->
+                <!--                    android:id="@+id/mapbox"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="240dp"-->
+                <!--                    android:layout_marginHorizontal="8dp"-->
+                <!--                    android:layout_marginVertical="10dp"-->
+                <!--                    app:cardBackgroundColor="@color/boxgreen"-->
+                <!--                    app:cardCornerRadius="13dp"-->
+                <!--                    app:cardElevation="5dp"-->
+                <!--                    app:layout_constraintBottom_toTopOf="@id/measuringStationAddressTextView"-->
+                <!--                    app:layout_constraintEnd_toEndOf="parent"-->
+                <!--                    app:layout_constraintStart_toStartOf="parent"-->
+                <!--                    app:layout_constraintTop_toBottomOf="@id/lowerDivider">-->
 
-<!--                    <fragment-->
-<!--                        android:id="@+id/map"-->
-<!--                        android:name="com.naver.maps.map.MapFragment"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="match_parent" />-->
+                <!--                    <fragment-->
+                <!--                        android:id="@+id/map"-->
+                <!--                        android:name="com.naver.maps.map.MapFragment"-->
+                <!--                        android:layout_width="match_parent"-->
+                <!--                        android:layout_height="match_parent" />-->
 
 
-<!--                </androidx.cardview.widget.CardView>-->
+                <!--                </androidx.cardview.widget.CardView>-->
 
                 <TextView
                     android:id="@+id/measuringStationAddressTextView"
